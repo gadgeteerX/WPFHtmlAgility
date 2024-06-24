@@ -10,6 +10,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
+using HtmlAgilityPack;
+using System.Net;
+using System.Net.Http;
+using System.Media;
 
 namespace WPFHtmlAgility
 {
@@ -30,7 +34,24 @@ namespace WPFHtmlAgility
 
         private void btnGetData_Click(object sender, RoutedEventArgs e)
         {
+            HttpClient h = new HttpClient();
+            var vhtml = h.GetStringAsync("https://www.hattongardenmetals.com/gold-britannia-coins").Result;
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(vhtml);
+            var vElement = doc.DocumentNode.SelectSingleNode(
+                "//span[@id='ctl00_Content_ProductGridBestSellers_gvGridLayout_ctl00_lblPriceEach']");
+            var vGold = vElement.InnerText.Trim();
+            txtPrice.Text = vGold.ToString();
 
+            DateTime d = DateTime.Now;
+            string strDate = d.ToString();
+            txtDate.Text = strDate;
+
+            txtEditor.Text += vGold.ToString() + ", " + strDate +"\n";
+
+            txtStatus.Text = "Sourced at:   " + strDate;
+            SoundPlayer sp = new SoundPlayer(Properties.Resources.Alarm10);
+            sp.Play();
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
