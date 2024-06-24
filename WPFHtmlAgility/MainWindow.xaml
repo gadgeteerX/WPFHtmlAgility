@@ -1,0 +1,59 @@
+﻿<Window x:Class="WPFHtmlAgility.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFHtmlAgility"
+        mc:Ignorable="d"
+        Title="WPFHtmlAgility" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" Background="LightGray">
+            <MenuItem Header="_File">
+                <MenuItem Command="ApplicationCommands.Open"/>
+                <MenuItem Command="ApplicationCommands.Save"/>
+                <Separator/>
+                <MenuItem x:Name="mnuClose" Header="Close" Click="mnuClose_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Command="ApplicationCommands.Copy"/>
+                <MenuItem Command="ApplicationCommands.Cut"/>
+                <MenuItem Command="ApplicationCommands.Paste"/>
+            </MenuItem>
+        </Menu>
+
+        <StatusBar DockPanel.Dock="Bottom" Background="LightGray">
+            <TextBox x:Name="txtStatus" Width="800" Background="White"/>
+        </StatusBar>
+
+        <Grid DockPanel.Dock="Left" Background="AliceBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <WrapPanel Grid.Column="0">
+                <Label Content="Price" Margin="20,10"/>
+                <TextBox x:Name="txtPrice" Margin="20,10" Height="20" Width="80"/>
+                <Label Content="Date" Margin="20,10"/>
+                <TextBox x:Name="txtDate" Margin="20,10" Height="20" Width="160"/>
+            </WrapPanel>
+
+            <TextBox x:Name="txtEditor" Grid.Column="0" Margin="20,10" Height="200"/>
+            <GridSplitter Grid.Column="0" Width="10" Background="Red"/>
+
+            <StackPanel Grid.Column="1" Background="Azure">
+                <Button x:Name="btnGetData" Content="Get Data" Margin="20,20" Width="100" 
+                        Click="btnGetData_Click"/>
+
+                <Button x:Name="btnClose" Content="Close" Margin="20,220" Width="100"
+                        Click="btnClose_Click"/>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+    
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Open"
+                        CanExecute="OpenCmdCanExecute" Executed="OpenCmdExecuted"/>
+        <CommandBinding Command="ApplicationCommands.Save"
+                        CanExecute="SaveCmdCanExecute" Executed="SaveCmdExecuted"/>
+    </Window.CommandBindings>
+</Window>
